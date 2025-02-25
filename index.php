@@ -45,7 +45,7 @@
 
     <script>
         let currentPage = 1;
-        const recordsPerPage = 15;
+        const recordsPerPage = 10;
         let totalRecords = 0;
         let allData = [];
 
@@ -67,11 +67,10 @@
             const clientSecret = 'N3nM7kY7oP5tJ7nW1fM7vB8iC2fA8oV4mG8cF6pU0uK3bD3qS0';
             const filterType = document.getElementById('filterType').value.trim();
 
-            // เริ่มดึงข้อมูลจากลำดับที่ 17 (offet = 16, เพราะ index)
-            const offset = 16;
+           
             const limit = 4500; // ปรับจำนวนข้อมูลต่อครั้งได้
 
-            let url = `${apiUrl}?offset=${offset}&limit=${limit}`;
+            let url = `${apiUrl}?limit=${limit}`;
             if (filterType && filterType !== 'all') {
                 url += `&keyword=${encodeURIComponent(filterType)}`;
             }
@@ -125,7 +124,7 @@
                         <td>${item.Telephone || '-'}</td>
                         <td>${item.DepositFlag === 'T' ? '✔' : '✘'}</td>
                         <td>${item.LoanFlag === 'T' ? '✔' : '✘'}</td>
-                        <td><button class="btn btn-info btn-sm" onclick="showDetails('${item.AuthorizedName}', '${item.TypeName}', '${item.Address}', '${item.Telephone}')">เพิ่มเติม</button></td>
+                        <td><button class="btn btn-info btn-sm" onclick="showDetails('${item.Id}','${item.AuthorizedName}', '${item.TypeName}', '${item.Address}', '${item.Telephone}')">เพิ่มเติม</button></td>
                     </tr>`;
                     resultTable.innerHTML += row;
                 });
@@ -139,10 +138,9 @@
         }
 
         // ✅ ฟังก์ชันแสดงรายละเอียด
-        function showDetails(name, type, address, phone) {
-            alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 ชื่อ: ${name}\n📂 ประเภท: ${type}\n📍 ที่อยู่: ${address || '-'}\n📞 โทรศัพท์: ${phone || '-'}`);
+        function showDetails(id, name, type, address, phone) {
+            alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 bbb: ${id}\n ชื่อ: ${name}\n📂 ประเภท: ${type}\n📍 ที่อยู่: ${address || '-'}\n📞 โทรศัพท์: ${phone || '-'}`);
         }
-
         // ✅ Event Listeners
         document.getElementById('fetchData').addEventListener('click', fetchData);
         document.getElementById('clearSearch').addEventListener('click', clearSearch);

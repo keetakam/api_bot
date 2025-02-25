@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ตรวจสอบใบอนุญาต - BOT API</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Bootstrap JS (สำหรับปุ่ม Bootstrap) -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 <body>
     <div class="container mt-5">
@@ -44,6 +48,10 @@
         </div>
     </div>
 
+    
+    <div id="details" class="alert alert-info mt-3 d-none">
+    <p>นี่คือรายละเอียดเพิ่มเติมที่จะแสดงเมื่อกดปุ่ม "More" คุณสามารถซ่อนหรือแสดงเนื้อหานี้ได้ตามต้องการ!</p>
+</div>
     <script>
         let currentPage = 1;
         const recordsPerPage = 15;
@@ -123,7 +131,8 @@
                         <td>${item.Telephone || '-'}</td>
                         <td>${item.DepositFlag === 'T' ? '✔' : '✘'}</td>
                         <td>${item.LoanFlag === 'T' ? '✔' : '✘'}</td>
-                        <td><button class="btn btn-info" onclick="showDetails('${item.AuthorizedName}', '${item.TypeName}', '${item.Address}', '${item.Telephone}')>more</button></td>
+                        <td><button  onclick="toggleDetails()">More</button></td>
+                        <td><button class="btn btn-info" onclick="showDetails('${item.AuthorizedName}', '${item.TypeName}', '${item.Address}', '${item.Telephone}')">more</button></td>
                     </tr>`;
                     resultTable.innerHTML += row;
                 });
@@ -137,15 +146,20 @@
         }
 
 
-
         // ฟังก์ชันสำหรับโหลดข้อมูลเมื่อคลิกปุ่ม "ดึงข้อมูลทั้งหมด"
         document.getElementById('fetchData').addEventListener('click', fetchData);
         
 
-         // ✅ ฟังก์ชันแสดงรายละเอียด
+         // ✅ ฟังก์ชันแสดงรายละเอียด(alert)
          function showDetails(name, type, address, phone) {
             alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 ชื่อ: ${name}\n📂 ประเภท: ${type}\n📍 ที่อยู่: ${address || '-'}\n📞 โทรศัพท์: ${phone || '-'}`);
         }
+        // ✅ ฟังก์ชันแสดงรายละเอียด(ใช้ overlayใส่  table)
+        function toggleDetails() {
+            var details = document.getElementById("details");
+            details.classList.toggle("d-none"); // ใช้ Bootstrap class `d-none` แทน `display: none`
+        }
+        
         // ฟังก์ชันสำหรับเปลี่ยนหน้า
         document.getElementById('prevPage').addEventListener('click', () => {
             if (currentPage > 1) { 
