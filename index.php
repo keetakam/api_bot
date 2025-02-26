@@ -36,17 +36,28 @@
             </table>
         </div>
 <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="moreInfoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">📌 รายละเอียดเพิ่มเติม</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>📛 ชื่อใบอนุญาติ:</strong> <span id="modalName"></span></p>
-                    <p><strong>📅 วันที่เริ่มดำเนินการ:</strong> <span id="modalStartDate"></span></p>
-                    <p><strong>✅ สถานะ:</strong> <span id="modalStatusName"></span></p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>📛 ชื่อ</th>
+                                <th>📅 วันที่เริ่ม</th>
+                                <th>✅ สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalTableBody">
+                            <!-- ข้อมูลจะถูกเพิ่มที่นี่ -->
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
@@ -93,10 +104,22 @@
             console.log("📌 เรียกฟังก์ชั่น renderMore2");
             console.log(_data);
 
-            // ดึงค่าจาก JSON
-            document.getElementById("modalName").innerText = _data[0].Name;
-            document.getElementById("modalStartDate").innerText = _data[0].StartDate;
-            document.getElementById("modalStatusName").innerText = _data[0].StatusName;
+            // ดึง tbody ของตาราง
+            let tableBody = document.getElementById("modalTableBody");
+            tableBody.innerHTML = ""; // เคลียร์ข้อมูลเก่าก่อนเพิ่มใหม่
+
+            // วนลูปเพิ่มข้อมูลจาก `_data`
+            _data.forEach((item, index) => {
+                let row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.Name}</td>
+                        <td>${item.StartDate}</td>
+                        <td>${item.StatusName}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
 
             // แสดง Modal
             let modal = new bootstrap.Modal(document.getElementById('moreInfoModal'));
