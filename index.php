@@ -277,6 +277,9 @@ Object.values(records).forEach((value, index) => {
             const resultTable = document.getElementById('resultTable');
             resultTable.innerHTML = '';
 
+            //เรียง
+            allData.sort((a,b) => a.Id- b.Id);
+
             const startIndex = (currentPage - 1) * recordsPerPage;
             const endIndex = startIndex + recordsPerPage;
             const paginatedData = allData.slice(startIndex, endIndex);
