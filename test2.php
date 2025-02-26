@@ -1,79 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toggle Details in Table as Expandable Row</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>แสดงใบอนุญาตจาก JSON</title>
+    <style>
+        #licenseDetails {
+            padding: 15px;
+            border: 2px solid #3498db;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            width: 300px;
+            display: none;
+        }
+    </style>
 </head>
-<body class="p-4">
+<body>
 
-    <h2 class="text-center mb-4">ตารางแสดงข้อมูลพร้อมปุ่ม More</h2>
+    <button onclick="renderMore('license1')">แสดงข้อมูลใบอนุญาต 1</button>
+    <button onclick="renderMore('license2')">แสดงข้อมูลใบอนุญาต 2</button>
 
-    <div class="container">
-        <table class="table table-bordered table-striped text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>ชื่อ</th>
-                    <th>อายุ</th>
-                    <th>เพิ่มเติม</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>สมชาย</td>
-                    <td>30</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="toggleDetails('detail1')">More</button>
-                    </td>
-                </tr>
-                <tr id="detail1" class="d-none">
-                    <td colspan="4" class="text-start">
-                        <strong>รายละเอียด:</strong> สมชายเป็นนักพัฒนาเว็บที่มีประสบการณ์ใน HTML, CSS, และ JavaScript
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>สมหญิง</td>
-                    <td>25</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="toggleDetails('detail2')">More</button>
-                    </td>
-                </tr>
-                <tr id="detail2" class="d-none">
-                    <td colspan="4" class="text-start">
-                        <strong>รายละเอียด:</strong> สมหญิงเป็นนักออกแบบ UI/UX ที่เชี่ยวชาญใน Figma และ Adobe XD
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>ก้อง</td>
-                    <td>35</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="toggleDetails('detail3')">More</button>
-                    </td>
-                </tr>
-                <tr id="detail3" class="d-none">
-                    <td colspan="4" class="text-start">
-                        <strong>รายละเอียด:</strong> ก้องเป็นวิศวกรซอฟต์แวร์ที่ทำงานด้าน AI และ Machine Learning
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="licenseDetails"></div>
 
     <script>
-        function toggleDetails(detailId) {
-            var detailsRow = document.getElementById(detailId);
-            detailsRow.classList.toggle("d-none");
+        const licenseData = {
+            "license1": { "amount": 5, "detail": "ใบอนุญาตธุรกิจร้านอาหาร" },
+            "license2": { "amount": 10, "detail": "ใบอนุญาตก่อสร้าง" }
+        };
+
+        function renderMore(licenseKey) {
+            let data = licenseData[licenseKey];
+            if (!data) {
+                document.getElementById("licenseDetails").innerHTML = "<p>❌ ไม่พบข้อมูลใบอนุญาต</p>";
+                return;
+            }
+            
+            document.getElementById("licenseDetails").innerHTML = `
+                <h3>📌 รายละเอียดใบอนุญาต</h3>
+                <p>🏢 จำนวนใบอนุญาต: <strong>${data.amount}</strong></p>
+                <p>📃 รายละเอียด: ${data.detail}</p>
+            `;
+            document.getElementById("licenseDetails").style.display = "block";
         }
     </script>
 
