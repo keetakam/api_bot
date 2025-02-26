@@ -60,7 +60,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="fetchData()">ปิด</button>
                 </div>
             </div>
         </div>
@@ -99,6 +99,11 @@
             console.log(_data[0].StartDate);
             console.log(_data[0].StatusName);
         }
+
+        function refreshPage() {
+         location.reload(); // รีเฟรชหน้าเว็บ
+         }
+
 
         function renderMore2(_data) {
             console.log("📌 เรียกฟังก์ชั่น renderMore2");
@@ -238,8 +243,6 @@ Object.values(records).forEach((value, index) => {
             if (filterType && filterType !== 'all') {
                 url += `&keyword=${encodeURIComponent(filterType)}`;
             }
-
-
             try {
                 const response = await fetch(url, {
                     method: 'GET',
@@ -268,15 +271,6 @@ Object.values(records).forEach((value, index) => {
                 document.getElementById('resultTable').innerHTML = `<tr><td colspan="8" class="text-center text-danger">เกิดข้อผิดพลาด: ${error.message}</td></tr>`;
             }
         }
-
-        // // ฟังก์ชั่น render moredetail
-        // function renderMore(xx){
-
-        //     alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 bbb: ${id}`);
-
-        // }
-
-
 
         // ✅ ฟังก์ชันแสดงผลข้อมูลในตาราง
         function renderTable() {
@@ -310,22 +304,11 @@ Object.values(records).forEach((value, index) => {
             document.getElementById('prevPage').disabled = currentPage === 1;
             document.getElementById('nextPage').disabled = endIndex >= totalRecords;
         }
-
-       
-         // ✅ ฟังก์ชันแสดงรายละเอียด
-         function showDetails2(id, name, type, address, phone) {
-            alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 bbb: ${id}\n ชื่อ: ${name}\n📂 ประเภท: ${type}\n📍 ที่อยู่: ${address || '-'}\n📞 โทรศัพท์: ${phone || '-'}`);
-        }
-
-
         // ✅ ฟังก์ชันแสดงรายละเอียด
         function showDetails(id, name, type, address, phone) {
             alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 bbb: ${id}\n ชื่อ: ${name}\n📂 ประเภท: ${type}\n📍 ที่อยู่: ${address || '-'}\n📞 โทรศัพท์: ${phone || '-'}`);
         }
-         // ✅ ฟังก์ชันแสดงรายละเอียด
-        function showDetails(id, name, type, address, phone) {
-            alert(`📌 รายละเอียดหน่วยงาน\n\n🏢 bbb: ${id}\n ชื่อ: ${name}\n📂 ประเภท: ${type}\n📍 ที่อยู่: ${address || '-'}\n📞 โทรศัพท์: ${phone || '-'}`);
-        }
+     
         // ✅ Event Listeners
         document.getElementById('fetchData').addEventListener('click', fetchData);
         document.getElementById('clearSearch').addEventListener('click', clearSearch);
